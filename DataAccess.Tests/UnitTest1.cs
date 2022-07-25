@@ -6,11 +6,12 @@ namespace DataAccess.Tests
     public class UnitTest1
     {
         [Fact]
-        public void GeneratePersonFaker()
+        public async Task GeneratePersonFaker()
         {
-            var persons = new PersonFaker().Generate(5);
-
+            var persons = new PersonFaker().Generate(100);
             var json = JsonConvert.SerializeObject(persons);
+
+            await File.WriteAllTextAsync(Path.Combine("..", "..", "..", "GeneratedPersons.json"), json);
         }
     }
 }

@@ -51,8 +51,8 @@ namespace DataAccess.Tests.Fakers
 
         public override IEnumerable<Person> Generate(int count)
         {
-            AddAddressRule(count);
-            AddEmailRule(count);
+            AddAddressRule(3);
+            AddEmailRule(3);
 
             return base.Generate(count);
         }
