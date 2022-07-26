@@ -5,7 +5,7 @@
         protected override void AddRules()
         {
             Faker = Faker
-                .RuleFor(x => x.Id, f => f.Random.Number(0, 10000))
+                //.RuleFor(x => x.Id, f => FakerIdGenerator.GenerateId())
                 .RuleFor(x => x.StreetAddress, f => f.Address.StreetAddress(true))
                 .RuleFor(x => x.City, f => f.Address.City())
                 .RuleFor(x => x.State, f => f.Address.StateAbbr())

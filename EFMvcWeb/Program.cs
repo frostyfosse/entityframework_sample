@@ -1,5 +1,7 @@
 using DataAccess.DataAccess;
+using DataAccess.Models;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,6 +16,9 @@ services.AddDbContext<PeopleContext>(options =>
     var connectionString = builder.Configuration.GetConnectionString("Default");
 
     options.UseSqlServer(connectionString);
+
+    //DbContextOptionsBuilder.EnableSensitiveDataLogging
+    options.EnableSensitiveDataLogging();
 });
 
 var app = builder.Build();

@@ -3,10 +3,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace DataAccess.Models
 {
-    public class Address
+    public class Address : ModelBase
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(200)]
         public string? StreetAddress { get; set; }

@@ -2,10 +2,8 @@
 
 namespace DataAccess.Models
 {
-    public class Person
+    public class Person : ModelBase
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(50)]
         public string? FirstName { get; set; }

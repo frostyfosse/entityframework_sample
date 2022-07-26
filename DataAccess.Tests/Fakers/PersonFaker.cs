@@ -7,35 +7,52 @@ namespace DataAccess.Tests.Fakers
         public PersonFaker()
         {
             AddRules();
+            _addressFaker = new AddressFaker();
+            _emailFaker = new EmailFaker();
         }
 
-        bool _addressRuleAdded;
-        bool _emailRuleAdded;
+        AddressFaker _addressFaker;
+        EmailFaker _emailFaker;
 
-        void AddEmailRule(int count)
-        {
-            if (_emailRuleAdded)
-                return;
+        //bool _addressRuleAdded;
+        //bool _emailRuleAdded;
+
+        //void AddEmailRule(int count)
+        //{
+        //    if (_emailRuleAdded)
+        //        return;
             
-            var emailFaker = new EmailFaker();
+        //    var emailFaker = new EmailFaker();
 
-            Faker = Faker
-                .RuleFor(p => p.EmailAddresses, emailFaker.Generate(count));
+        //    Faker = Faker
+        //        .RuleFor(p => p.EmailAddresses, emailFaker.Generate(count));
 
-            _emailRuleAdded = true;
-        }
+        //    _emailRuleAdded = true;
+        //}
 
-        void AddAddressRule(int count)
+        //void AddAddressRule(int count)
+        //{
+        //    if (_addressRuleAdded)
+        //        return;
+
+        //    var addressFaker = new AddressFaker();
+
+        //    Faker = Faker
+        //        .RuleFor(p => p.Addresses, addressFaker.Generate(count));
+
+        //    _addressRuleAdded = true;
+        //}
+
+        void AddChildren(int count, IEnumerable<Person> persons)
         {
-            if (_addressRuleAdded)
-                return;
+            foreach(var person in persons)
+            {
+                var addresses = _addressFaker.Generate(count);
+                var emails = _emailFaker.Generate(count);
 
-            var addressFaker = new AddressFaker();
-
-            Faker = Faker
-                .RuleFor(p => p.Addresses, addressFaker.Generate(count));
-
-            _addressRuleAdded = true;
+                person.Addresses.AddRange(addresses);
+                person.EmailAddresses.AddRange(emails);
+            }
         }
 
         protected override void AddRules()
@@ -43,18 +60,19 @@ namespace DataAccess.Tests.Fakers
             var addressFaker = new AddressFaker();
 
             Faker = this.Faker
+                //.RuleFor(x => x.Id, f => FakerIdGenerator.GenerateId())
                 .RuleFor(p => p.LastName, f => f.Person.LastName)
                 .RuleFor(p => p.FirstName, f => f.Person.FirstName)
-                .RuleFor(p => p.Age, f => f.Random.Number(1, 100))
-                .RuleFor(p => p.Id, f => f.Random.Number(101, 10000));
+                .RuleFor(p => p.Age, f => f.Random.Number(1, 100));
         }
 
         public override IEnumerable<Person> Generate(int count)
         {
-            AddAddressRule(3);
-            AddEmailRule(3);
+            var persons = base.Generate(count);
 
-            return base.Generate(count);
+            AddChildren(3, persons);
+
+            return persons;
         }
     }
 }

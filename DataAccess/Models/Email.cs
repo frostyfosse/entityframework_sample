@@ -2,10 +2,8 @@
 
 namespace DataAccess.Models
 {
-    public class Email
+    public class Email : ModelBase
     {
-        public int Id { get; set; }
-
         [Required]
         [MaxLength(200)]
         public string? EmailAddress { get; set; }
